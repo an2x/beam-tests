@@ -11,7 +11,7 @@
   <packaging>jar</packaging>
 
   <properties>
-    <beam.version>2.61.0-SNAPSHOT</beam.version>
+    <beam.version>2.63.0</beam.version>
     <kafka-clients.version>3.7.0</kafka-clients.version>
     <slf4j.version>1.7.32</slf4j.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,6 +25,10 @@
         <configuration>
           <source>11</source>
           <target>11</target>
+          <excludes>
+            <exclude>**/pipelines/Kafka*.java</exclude>
+            <exclude>**/pipelines/*Teradata*.java</exclude>
+          </excludes>
         </configuration>
       </plugin>
 
@@ -55,6 +59,20 @@
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
 
     <pluginManagement>
@@ -79,6 +97,11 @@
     </dependency>
     -->
     <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.apache.beam</groupId>
       <artifactId>beam-sdks-java-core</artifactId>
       <version>${beam.version}</version>
@@ -88,6 +111,7 @@
       <artifactId>beam-runners-google-cloud-dataflow-java</artifactId>
       <version>${beam.version}</version>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.apache.beam</groupId>
       <artifactId>beam-sdks-java-io-kafka</artifactId>
@@ -114,11 +138,6 @@
       <version>${beam.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <version>${slf4j.version}</version>
-    </dependency>
-    <dependency>
       <groupId>org.apache.kafka</groupId>
       <artifactId>kafka-clients</artifactId>
       <version>${kafka-clients.version}</version>
@@ -133,6 +152,13 @@
       <groupId>com.google.cloud.hosted.kafka</groupId>
       <artifactId>managed-kafka-auth-login-handler</artifactId>
       <version>1.0.1</version>
+    </dependency>
+    -->
+    <dependency>
+      <groupId>org.openjdk.nashorn</groupId>
+      <artifactId>nashorn-core</artifactId>
+      <version>15.4</version>
+      <scope>provided</scope>
     </dependency>
     <!--
     <dependency>
